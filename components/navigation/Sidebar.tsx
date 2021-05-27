@@ -9,7 +9,7 @@ import SettingsIcon from '@material-ui/icons/SettingsOutlined';
 import HelpIcon from '@material-ui/icons/HelpOutlineOutlined';
 
 import {SidebarItem} from "./Sidebar/SidebarItem";
-import SidebarDrawer from "./Sidebar/SidebarDrawer";
+import SidebarDrawer, {getClosedWidth} from "./Sidebar/SidebarDrawer";
 
 import sidebarItems from "./sidebarItems";
 import {makeStyles} from "@material-ui/core/styles";
@@ -67,6 +67,6 @@ export const useStyles = makeStyles((theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(3),
+        marginLeft: getClosedWidth(theme),
     },
 }));

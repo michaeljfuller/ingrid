@@ -2,7 +2,7 @@ import React, {PropsWithChildren} from 'react';
 import clsx from "clsx";
 import Drawer, {DrawerClassKey} from "@material-ui/core/Drawer";
 import {ThemeOfStyles, WithStylesOptions} from "@material-ui/styles/withStyles/withStyles";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles, Theme} from "@material-ui/core/styles";
 
 export interface SidebarDrawerProps {
     open: boolean;
@@ -24,10 +24,16 @@ export default function SidebarDrawer({open, children}: PropsWithChildren<Sideba
     >{children}</Drawer>;
 }
 
-const drawerWidth = 240;
+export function getClosedWidth(theme: Theme) {
+    return theme.spacing(9) + 1;
+}
+export function getOpenWidth(theme: Theme) {
+    return theme.spacing(24) + 1;
+}
+
 const useStyles = makeStyles((theme) => ({
     drawer: {
-        width: drawerWidth,
+        width: getClosedWidth(theme),
         flexShrink: 0,
         whiteSpace: 'nowrap',
     },
@@ -35,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
     },
     drawerOpen: {
-        width: drawerWidth,
+        width: getOpenWidth(theme),
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -47,10 +53,7 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         overflowX: 'hidden',
-        width: theme.spacing(7) + 1,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9) + 1,
-        },
+        width: getClosedWidth(theme),
     },
     toolbar: {
         display: 'flex',
