@@ -25,7 +25,7 @@ export default function SidebarDrawer({open, children}: PropsWithChildren<Sideba
 }
 
 export function getClosedWidth(theme: Theme) {
-    return theme.spacing(9) + 1;
+    return theme.spacing(7) + 1;
 }
 export function getOpenWidth(theme: Theme) {
     return theme.spacing(24) + 1;

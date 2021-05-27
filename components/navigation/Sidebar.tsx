@@ -1,18 +1,15 @@
 import React, {PropsWithChildren, useState} from "react";
 
+import {makeStyles} from "@material-ui/core/styles";
 import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import SettingsIcon from '@material-ui/icons/SettingsOutlined';
-import HelpIcon from '@material-ui/icons/HelpOutlineOutlined';
 
-import {SidebarItem} from "./Sidebar/SidebarItem";
+import SidebarItem from "./Sidebar/SidebarItem";
+import SidebarItemList from "./Sidebar/SidebarItemList";
 import SidebarDrawer, {getClosedWidth} from "./Sidebar/SidebarDrawer";
 
 import {mainItems, miscItems} from "./sidebarItems";
-import {makeStyles} from "@material-ui/core/styles";
 
 export interface SidebarProps {}
 
@@ -29,24 +26,11 @@ export default function Sidebar({
 
     return <>
         <SidebarDrawer open={open}>
-            <div className={classes.toolbar}>
-                <SidebarItem
-                    label="Minimise"
-                    icon={open ? ChevronLeftIcon : ChevronRightIcon}
-                    onClick={toggleDrawer}
-                />
-            </div>
-
+            <SidebarItem label="Minimise" icon={open ? ChevronLeftIcon : ChevronRightIcon} onClick={toggleDrawer} />
             <Divider />
-
-            <List>
-                {mainItems.map(itemProps => <SidebarItem key={itemProps.label} onClick={closeDrawer} {...itemProps} />)}
-            </List>
-
+            <SidebarItemList items={mainItems} onClick={closeDrawer} />
             <Divider />
-
-            {miscItems.map(itemProps => <SidebarItem key={itemProps.label} onClick={closeDrawer} {...itemProps} />)}
-
+            <SidebarItemList items={miscItems} onClick={closeDrawer} />
         </SidebarDrawer>
 
         <main className={classes.content}>
@@ -56,14 +40,6 @@ export default function Sidebar({
 }
 
 export const useStyles = makeStyles((theme) => ({
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-    },
     content: {
         flexGrow: 1,
         marginLeft: getClosedWidth(theme),
