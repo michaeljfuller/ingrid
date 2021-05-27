@@ -11,7 +11,7 @@ import HelpIcon from '@material-ui/icons/HelpOutlineOutlined';
 import {SidebarItem} from "./Sidebar/SidebarItem";
 import SidebarDrawer, {getClosedWidth} from "./Sidebar/SidebarDrawer";
 
-import sidebarItems from "./sidebarItems";
+import {mainItems, miscItems} from "./sidebarItems";
 import {makeStyles} from "@material-ui/core/styles";
 
 export interface SidebarProps {}
@@ -40,13 +40,12 @@ export default function Sidebar({
             <Divider />
 
             <List>
-                {sidebarItems.map(itemProps => <SidebarItem key={itemProps.label} onClick={closeDrawer} {...itemProps} />)}
+                {mainItems.map(itemProps => <SidebarItem key={itemProps.label} onClick={closeDrawer} {...itemProps} />)}
             </List>
 
             <Divider />
 
-            <SidebarItem label="Settings" icon={SettingsIcon} />
-            <SidebarItem label="Help" icon={HelpIcon} />
+            {miscItems.map(itemProps => <SidebarItem key={itemProps.label} onClick={closeDrawer} {...itemProps} />)}
 
         </SidebarDrawer>
 
