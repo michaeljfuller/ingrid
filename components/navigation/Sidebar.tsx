@@ -24,6 +24,7 @@ export default function Sidebar({
 }: PropsWithChildren<SidebarProps>) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const closeDrawer = React.useCallback(() => setOpen(false), [setOpen]);
     const toggleDrawer = React.useCallback(() => setOpen(!open), [open, setOpen]);
 
     return <>
@@ -39,7 +40,7 @@ export default function Sidebar({
             <Divider />
 
             <List>
-                {sidebarItems.map(itemProps => <SidebarItem key={itemProps.label} {...itemProps} />)}
+                {sidebarItems.map(itemProps => <SidebarItem key={itemProps.label} onClick={closeDrawer} {...itemProps} />)}
             </List>
 
             <Divider />

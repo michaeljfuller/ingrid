@@ -9,8 +9,8 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import {SidebarItemProps} from "./Sidebar/SidebarItem";
 
 export default [
-    { label: 'Dashboard', icon: SpeedIcon },
-    { label: 'Buildings', icon: ApartmentIcon },
+    { label: 'Dashboard', icon: SpeedIcon, href: '/' },
+    { label: 'Buildings', icon: ApartmentIcon, href: '/two' },
     { label: 'Floors', icon: FilterNoneIcon },
     { label: 'Alerts', icon: ReportProblemOutlinedIcon },
     { label: 'Files', icon: DescriptionOutlinedIcon },
