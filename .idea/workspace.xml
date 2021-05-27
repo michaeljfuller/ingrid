@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0c0e5af-0655-4195-98f2-e1639eb5cb31" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/navigation/Sidebar/SidebarDrawer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/navigation/Sidebar/SidebarItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/navigation/sidebarItems.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/navigation/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/navigation/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +18,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -39,6 +44,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/components/navigation/Sidebar" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -51,7 +57,11 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Hobby\Web\ingrid\components\navigation\Sidebar" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Hobby\Web\ingrid\components\navigation\Sidebar" />
       <recent name="F:\Hobby\Web\ingrid\decorators\pages" />
       <recent name="F:\Hobby\Web\ingrid\decorators" />
     </key>
@@ -81,7 +91,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1622058116577</updated>
-      <workItem from="1622058119780" duration="6817000" />
+      <workItem from="1622058119780" duration="14629000" />
     </task>
     <servers />
   </component>

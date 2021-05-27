@@ -1,16 +1,71 @@
 import React, {PropsWithChildren, useState} from "react";
 
-export interface SidebarProps {
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
 
-}
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import SettingsIcon from '@material-ui/icons/SettingsOutlined';
+import HelpIcon from '@material-ui/icons/HelpOutlineOutlined';
 
+import {SidebarItem} from "./Sidebar/SidebarItem";
+import SidebarDrawer from "./Sidebar/SidebarDrawer";
+
+import sidebarItems from "./sidebarItems";
+import {makeStyles} from "@material-ui/core/styles";
+
+export interface SidebarProps {}
+
+/**
+ * @link https://material-ui.com/components/drawers/#mini-variant-drawer
+ */
 export default function Sidebar({
     children
 }: PropsWithChildren<SidebarProps>) {
-    const [count, setCount] = useState(0);
-    return <div>
-        <h1>Sidebar</h1>
-        <button onClick={() => setCount(count+1)}>{count}</button>
-        {children}
-    </div>
+    const classes = useStyles();
+    const [open, setOpen] = useState(false);
+    const toggleDrawer = React.useCallback(() => setOpen(!open), [open, setOpen]);
+
+    return <>
+        <SidebarDrawer open={open}>
+            <div className={classes.toolbar}>
+                <SidebarItem
+                    label="Minimise"
+                    icon={open ? ChevronLeftIcon : ChevronRightIcon}
+                    onClick={toggleDrawer}
+                />
+            </div>
+
+            <Divider />
+
+            <List>
+                {sidebarItems.map(itemProps => <SidebarItem key={itemProps.label} {...itemProps} />)}
+            </List>
+
+            <Divider />
+
+            <SidebarItem label="Settings" icon={SettingsIcon} />
+            <SidebarItem label="Help" icon={HelpIcon} />
+
+        </SidebarDrawer>
+
+        <main className={classes.content}>
+            {children}
+        </main>
+    </>;
 }
+
+export const useStyles = makeStyles((theme) => ({
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 1),
+        // necessary for content to be below app bar
+        ...theme.mixins.toolbar,
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+    },
+}));
