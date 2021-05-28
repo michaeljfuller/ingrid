@@ -1,5 +1,5 @@
 export interface DashboardProps {
-    infrastructure?: Partial<InfrastructureSelection>;
+    infrastructureSelection?: Partial<InfrastructureSelection>;
 }
 
 export default function Dashboard(props: DashboardProps) {

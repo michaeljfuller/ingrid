@@ -1,20 +1,23 @@
 import React from "react";
 import {GetServerSideProps} from 'next'
 import Head from 'next/head'
+import {NextRouter} from "next/router";
+
 import UseLayout from "../decorators/pages/UseLayout";
 import styles from '../styles/Page.module.css'
 import Dashboard from "../components/screens/Dashboard";
 import DashboardHeader, {DashboardHeaderProps} from "../components/pages/headers/DashboardHeader";
+import getInfrastructureSelectionFromIds from "../utils/getInfrastructureSelectionFromIds";
 
-interface DashboardPageProps {
+interface DashboardPageServerSideProps {
     infrastructure: Infrastructure;
 }
-interface DashboardPageState {
-    infrastructure?: Partial<InfrastructureSelection>;
+interface DashboardPageProps extends DashboardPageServerSideProps{
+    router: NextRouter;
 }
 
 //https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
-export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async context => {
+export const getServerSideProps: GetServerSideProps<DashboardPageServerSideProps> = async context => {
     return {
         props: {
             infrastructure: { // TODO Move to GraphQL
@@ -46,11 +49,27 @@ export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async 
 }
 
 @UseLayout()
-export default class DashboardPage extends React.PureComponent<DashboardPageProps, DashboardPageState> {
-    state = {} as DashboardPageState;
+export default class DashboardPage extends React.PureComponent<DashboardPageProps> {
 
-    handleInfrastructure: DashboardHeaderProps['onInfrastructureSelection'] = infrastructure => {
-        this.setState({ infrastructure });
+    /** Update queryString with the InfrastructureSelection. */
+    private updateInfrastructureSelectionUri(infrastructure: Partial<InfrastructureSelection>) {
+        const query = {...this.props.router.query};
+        const keys = ['region', 'building', 'floor', 'room'] as Array<keyof InfrastructureSelection>;
+        keys.forEach(key => {
+            delete query[key];
+            const id = infrastructure[key]?.id;
+            if (id) query[key] = encodeURI(id);
+        });
+        return this.props.router.replace({ query });
+    }
+
+    /** Get InfrastructureSelection from the queryString */
+    get infrastructureSelection() {
+        return getInfrastructureSelectionFromIds(this.props.infrastructure, this.props.router.query as any)
+    }
+
+    handleInfrastructureSelection: DashboardHeaderProps['onInfrastructureSelection'] = async selection => {
+        await this.updateInfrastructureSelectionUri(selection);
     }
 
     render() {
@@ -66,12 +85,12 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
             <header className={styles.header}>
                 <DashboardHeader
                     infrastructure={this.props.infrastructure}
-                    onInfrastructureSelection={this.handleInfrastructure}
+                    onInfrastructureSelection={this.handleInfrastructureSelection}
                 />
             </header>
 
             <main className={styles.main}>
-                <Dashboard infrastructure={this.state.infrastructure} />
+                <Dashboard infrastructureSelection={this.infrastructureSelection} />
             </main>
 
         </div>;
