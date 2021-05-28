@@ -1,14 +1,13 @@
-import {Dispatch} from "react";
+import {Dispatch, useEffect} from "react";
 import PageHeader from "../PageHeader";
-import useInfrastructure, {InfrastructureState} from "../../../hooks/useInfrastructure";
+import useInfrastructure from "../../../hooks/useInfrastructure";
 import InfrastructureSelect, {InfrastructureSelectProps} from "./DashboardHeader/InfrastructureSelect";
-import useUpdateEffect from "../../../hooks/useUpdateEffect";
 import InfrastructureAction from "../../../hooks/useInfrastructure/InfrastructureAction";
 import css from "./DashboardHeader/DashboardHeader.module.css";
 
 export interface DashboardHeaderProps {
     infrastructure: Infrastructure;
-    onInfrastructureSelection: (selection: InfrastructureState) => void;
+    onInfrastructureSelection: (selection: Partial<InfrastructureSelection>) => void;
 }
 
 /**
@@ -21,11 +20,11 @@ export function DashboardHeader(props: DashboardHeaderProps) {
     ] = useInfrastructure(props.infrastructure);
 
     // If a dependency changes after the first render, use the callback.
-    useUpdateEffect(() => {
+    useEffect(() => {
         if (props.onInfrastructureSelection) {
-            props.onInfrastructureSelection({ infrastructure, region, building, floor, room });
+            props.onInfrastructureSelection({ region, building, floor, room });
         }
-    }, [region?.id, building?.id, floor?.id, room?.id]);
+    }, [props.onInfrastructureSelection, region?.id, building?.id, floor?.id, room?.id]);
 
     // Handle selection changes by creating an InfrastructureAction with the given `type` and event value as the payload.
     const onChangeRegion = createInfrastructureSelectionHandler(dispatchInfrastructure, "set_region_id");

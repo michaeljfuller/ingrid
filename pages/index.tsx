@@ -9,12 +9,15 @@ import DashboardHeader, {DashboardHeaderProps} from "../components/pages/headers
 interface DashboardPageProps {
     infrastructure: Infrastructure;
 }
+interface DashboardPageState {
+    infrastructure?: Partial<InfrastructureSelection>;
+}
 
 //https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
 export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async context => {
     return {
         props: {
-            infrastructure: {
+            infrastructure: { // TODO Move to GraphQL
                 regions: [
                     {
                         id: 'r1', name: 'Region 1', buildings: []
@@ -32,7 +35,8 @@ export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async 
                                             {id: 'r2', name: 'Room 102'},
                                         ]
                                     }
-                                ]},
+                                ]
+                            },
                         ]
                     },
                 ],
@@ -42,10 +46,11 @@ export const getServerSideProps: GetServerSideProps<DashboardPageProps> = async 
 }
 
 @UseLayout()
-export default class DashboardPage extends React.PureComponent<DashboardPageProps> {
+export default class DashboardPage extends React.PureComponent<DashboardPageProps, DashboardPageState> {
+    state = {} as DashboardPageState;
 
-    handleInfrastructure: DashboardHeaderProps['onInfrastructureSelection'] = selection => {
-        console.log('DashboardPage.handleSelection', selection);
+    handleInfrastructure: DashboardHeaderProps['onInfrastructureSelection'] = infrastructure => {
+        this.setState({ infrastructure });
     }
 
     render() {
@@ -66,7 +71,7 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
             </header>
 
             <main className={styles.main}>
-                <Dashboard />
+                <Dashboard infrastructure={this.state.infrastructure} />
             </main>
 
         </div>;
