@@ -3,7 +3,7 @@
  */
 export function getInfrastructureSelectionFromIds<Type extends InfrastructureType>(
     infrastructure: Infrastructure,
-    ids: Record<keyof InfrastructureSelection, string|undefined>
+    ids: InfrastructureSelectionIds,
 ): Partial<InfrastructureSelection> {
     const region = ids.region ? infrastructure.regions.find(item => item.id === ids.region) : undefined;
     const building = ids.building ? region?.buildings.find(item => item.id === ids.building) : undefined;
@@ -13,3 +13,5 @@ export function getInfrastructureSelectionFromIds<Type extends InfrastructureTyp
     return { region, building, floor, room };
 }
 export default getInfrastructureSelectionFromIds;
+
+export type InfrastructureSelectionIds = Record<keyof InfrastructureSelection, string|undefined>;

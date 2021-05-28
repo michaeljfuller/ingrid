@@ -7,7 +7,7 @@ import UseLayout from "../decorators/pages/UseLayout";
 import styles from '../styles/Page.module.css'
 import Dashboard from "../components/screens/Dashboard";
 import DashboardHeader, {DashboardHeaderProps} from "../components/pages/headers/DashboardHeader";
-import getInfrastructureSelectionFromIds from "../utils/getInfrastructureSelectionFromIds";
+import getInfrastructureSelectionFromIds from "../utils/infrastructure/getInfrastructureSelectionFromIds";
 
 interface DashboardPageServerSideProps {
     infrastructure: Infrastructure;
@@ -73,7 +73,9 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
     }
 
     render() {
-        console.log('DashboardPage.render', this.props);
+        console.log('DashboardPage.render');
+        const infrastructureSelection = this.infrastructureSelection;
+
         return <div className={styles.container}>
 
             <Head>
@@ -86,11 +88,12 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
                 <DashboardHeader
                     infrastructure={this.props.infrastructure}
                     onInfrastructureSelection={this.handleInfrastructureSelection}
+                    infrastructureSelection={infrastructureSelection}
                 />
             </header>
 
             <main className={styles.main}>
-                <Dashboard infrastructureSelection={this.infrastructureSelection} />
+                <Dashboard infrastructureSelection={infrastructureSelection} />
             </main>
 
         </div>;

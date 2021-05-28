@@ -1,53 +1,25 @@
-import {Dispatch, useEffect} from "react";
 import PageHeader from "../PageHeader";
-import useInfrastructure from "../../../hooks/useInfrastructure";
-import InfrastructureSelect, {InfrastructureSelectProps} from "./DashboardHeader/InfrastructureSelect";
-import InfrastructureAction from "../../../hooks/useInfrastructure/InfrastructureAction";
 import css from "./DashboardHeader/DashboardHeader.module.css";
+import InfrastructureSelection from "../../forms/fieldset/InfrastructureSelection";
 
 export interface DashboardHeaderProps {
     infrastructure: Infrastructure;
     onInfrastructureSelection: (selection: Partial<InfrastructureSelection>) => void;
+    infrastructureSelection: Partial<InfrastructureSelection>;
 }
 
 /**
  * The header on the Dashboard page, allowing the user to select filters.
  */
-export function DashboardHeader(props: DashboardHeaderProps) {
-    const [
-        {infrastructure, region, building, floor, room},
-        dispatchInfrastructure,
-    ] = useInfrastructure(props.infrastructure);
-
-    // If a dependency changes after the first render, use the callback.
-    useEffect(() => {
-        if (props.onInfrastructureSelection) {
-            props.onInfrastructureSelection({ region, building, floor, room });
-        }
-    }, [props.onInfrastructureSelection, region?.id, building?.id, floor?.id, room?.id]);
-
-    // Handle selection changes by creating an InfrastructureAction with the given `type` and event value as the payload.
-    const onChangeRegion = createInfrastructureSelectionHandler(dispatchInfrastructure, "set_region_id");
-    const onChangeBuilding = createInfrastructureSelectionHandler(dispatchInfrastructure, "set_building_id");
-    const onChangeFloor = createInfrastructureSelectionHandler(dispatchInfrastructure, "set_floor_id");
-    const onChangeRoom = createInfrastructureSelectionHandler(dispatchInfrastructure, "set_room_id");
-
+export const DashboardHeader = function DashboardHeader(props: DashboardHeaderProps) {
     return <PageHeader title="Dashboard" className={css.root}>
         <form>
-            <fieldset>
-                <InfrastructureSelect id="dashboard-header-region"   label="Region"   value={region?.id || ''}   onChange={onChangeRegion}   items={infrastructure.regions}  />
-                <InfrastructureSelect id="dashboard-header-building" label="Building" value={building?.id || ''} onChange={onChangeBuilding} items={region?.buildings || []} />
-                <InfrastructureSelect id="dashboard-header-floor"    label="Floor"    value={floor?.id || ''}    onChange={onChangeFloor}    items={building?.floors || []}  />
-                <InfrastructureSelect id="dashboard-header-room"     label="Room"     value={room?.id || ''}     onChange={onChangeRoom}     items={floor?.rooms || []}      />
-            </fieldset>
+            <InfrastructureSelection
+                infrastructure={props.infrastructure}
+                selection={props.infrastructureSelection}
+                onSelection={props.onInfrastructureSelection}
+            />
         </form>
     </PageHeader>
-}
+};
 export default DashboardHeader;
-
-function createInfrastructureSelectionHandler(
-    dispatcher: Dispatch<InfrastructureAction>,
-    type: "set_region_id"|"set_building_id"|"set_floor_id"|"set_room_id"
-): InfrastructureSelectProps['onChange'] {
-    return (event) => dispatcher({ type, payload: event.target.value as string });
-}

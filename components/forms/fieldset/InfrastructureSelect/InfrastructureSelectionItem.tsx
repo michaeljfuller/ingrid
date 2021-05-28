@@ -5,7 +5,7 @@ import FormControl from "@material-ui/core/FormControl";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 
-export interface InfrastructureSelectProps {
+export interface InfrastructureSelectionItemProps {
     id: string;
     label: string;
     value: string;
@@ -19,7 +19,7 @@ export interface InfrastructureSelectProps {
 /**
  * A selection box to pick a Region/Building/Floor/Room.
  */
-export function InfrastructureSelect(props: InfrastructureSelectProps) {
+export function InfrastructureSelectionItem(props: InfrastructureSelectionItemProps) {
     const labelId = props.id+'-label';
     const inputId = props.id+'-input';
     const classes = useStyles();
@@ -40,8 +40,7 @@ export function InfrastructureSelect(props: InfrastructureSelectProps) {
         </Select>
     </FormControl>
 }
-export default InfrastructureSelect;
-
+export default InfrastructureSelectionItem;
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
