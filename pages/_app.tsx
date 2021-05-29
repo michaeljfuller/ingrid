@@ -1,5 +1,6 @@
 import React from 'react';
 import type { AppProps as NextAppProps } from 'next/app'
+import { useRouter } from 'next/router'
 
 import '../styles/globals.css'
 import {WithLayout} from "../decorators/pages/UseLayout";
@@ -17,8 +18,9 @@ function MyApp({
   Component,
   pageProps
 }: AppProps) {
+  const router = useRouter();
   const getLayout = Component.getLayout || ((page) => page);
-  const page = getLayout( <Component {...pageProps} /> );
+  const page = getLayout( <Component router={router} {...pageProps} /> );
 
   // Remove the server-side injected CSS when client renders.
   React.useEffect(() => {
