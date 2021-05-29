@@ -1,7 +1,7 @@
-import {books} from "./data";
+import {infrastructure} from "./data";
 
 export default {
     Query: {
-        books: () => books,
+        infrastructure: () => infrastructure,
     },
 };
