@@ -31,8 +31,8 @@ type InfrastructureFromType<T extends InfrastructureType> = (
 );
 
 declare interface InfrastructureSelection {
-    region: Region;
-    building: Building;
-    floor: Floor;
-    room: Room;
+    region?: Region;
+    building?: Building;
+    floor?: Floor;
+    room?: Room;
 }

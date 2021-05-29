@@ -4,8 +4,8 @@ import InfrastructureSelection from "../../forms/fieldset/InfrastructureSelectio
 
 export interface DashboardHeaderProps {
     infrastructure: Infrastructure;
-    onInfrastructureSelection: (selection: Partial<InfrastructureSelection>) => void;
-    infrastructureSelection: Partial<InfrastructureSelection>;
+    onInfrastructureSelection: (selection: InfrastructureSelection) => void;
+    infrastructureSelection: InfrastructureSelection;
 }
 
 /**

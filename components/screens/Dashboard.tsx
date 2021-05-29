@@ -2,7 +2,7 @@ import css from "./Dashboard.module.css";
 import {repeat} from "../../utils/array";
 
 export interface DashboardProps {
-    infrastructureSelection?: Partial<InfrastructureSelection>;
+    infrastructureSelection?: InfrastructureSelection;
 }
 
 export default function Dashboard(props: DashboardProps) {

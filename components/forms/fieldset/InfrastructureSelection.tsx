@@ -3,8 +3,8 @@ import getInfrastructureSelectionFromIds, {InfrastructureSelectionIds} from "../
 
 export interface InfrastructureSelectionProps {
     infrastructure: Infrastructure;
-    selection: Partial<InfrastructureSelection>;
-    onSelection: (selection: Partial<InfrastructureSelection>) => void;
+    selection: InfrastructureSelection;
+    onSelection: (selection: InfrastructureSelection) => void;
 }
 
 /**

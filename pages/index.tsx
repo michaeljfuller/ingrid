@@ -14,7 +14,7 @@ interface DashboardPageServerSideProps {
     infrastructure?: Infrastructure;
     serverErrors: string[];
 }
-interface DashboardPageProps extends DashboardPageServerSideProps{
+interface DashboardPageProps extends DashboardPageServerSideProps {
     router: NextRouter;
 }
 
@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps<DashboardPageServerSideProps
 export default class DashboardPage extends React.PureComponent<DashboardPageProps> {
 
     /** Update queryString with the InfrastructureSelection. */
-    private updateInfrastructureSelectionUri(infrastructure: Partial<InfrastructureSelection>) {
+    private updateInfrastructureSelectionUri(infrastructure: InfrastructureSelection) {
         const query = {...this.props.router.query};
         const keys = ['region', 'building', 'floor', 'room'] as Array<keyof InfrastructureSelection>;
         keys.forEach(key => {
@@ -48,7 +48,7 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
     }
 
     /** Get InfrastructureSelection from the queryString */
-    get infrastructureSelection(): Partial<InfrastructureSelection> {
+    get infrastructureSelection(): InfrastructureSelection {
         if (this.props.infrastructure) {
             return getInfrastructureSelectionFromIds(this.props.infrastructure, this.props.router.query as any)
         }
