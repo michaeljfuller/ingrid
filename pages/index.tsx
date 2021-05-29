@@ -8,9 +8,11 @@ import styles from '../styles/Page.module.css'
 import Dashboard from "../components/screens/Dashboard";
 import DashboardHeader, {DashboardHeaderProps} from "../components/pages/headers/DashboardHeader";
 import getInfrastructureSelectionFromIds from "../utils/infrastructure/getInfrastructureSelectionFromIds";
+import {getAllInfrastructureFromServer} from "../api/graphql/queries/getAllInfrastructure";
 
 interface DashboardPageServerSideProps {
-    infrastructure: Infrastructure;
+    infrastructure?: Infrastructure;
+    serverErrors: string[];
 }
 interface DashboardPageProps extends DashboardPageServerSideProps{
     router: NextRouter;
@@ -18,32 +20,14 @@ interface DashboardPageProps extends DashboardPageServerSideProps{
 
 //https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
 export const getServerSideProps: GetServerSideProps<DashboardPageServerSideProps> = async context => {
+    const infrastructureRequest = await getAllInfrastructureFromServer();
+
     return {
         props: {
-            infrastructure: { // TODO Move to GraphQL
-                regions: [
-                    {
-                        id: 'r1', name: 'Region 1', buildings: []
-                    }, {
-                        id: 'r2', name: 'Region 2', buildings: [
-                            {
-                                id: 'b1', name: 'First Building', floors: []
-                            }, {
-                                id: 'b2', name: 'Second Building', floors: [
-                                    {
-                                        id: 'f1', name: '1st Floor', rooms: [],
-                                    }, {
-                                        id: 'f2', name: '2nd Floor', rooms: [
-                                            {id: 'r1', name: 'Room 101'},
-                                            {id: 'r2', name: 'Room 102'},
-                                        ]
-                                    }
-                                ]
-                            },
-                        ]
-                    },
-                ],
-            },
+            infrastructure: infrastructureRequest.data?.infrastructure,
+            serverErrors: [
+                ...(infrastructureRequest.errors?.map(error => error.message) || []) ,
+            ]
         },
     }
 }
@@ -64,8 +48,11 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
     }
 
     /** Get InfrastructureSelection from the queryString */
-    get infrastructureSelection() {
-        return getInfrastructureSelectionFromIds(this.props.infrastructure, this.props.router.query as any)
+    get infrastructureSelection(): Partial<InfrastructureSelection> {
+        if (this.props.infrastructure) {
+            return getInfrastructureSelectionFromIds(this.props.infrastructure, this.props.router.query as any)
+        }
+        return {};
     }
 
     handleInfrastructureSelection: DashboardHeaderProps['onInfrastructureSelection'] = async selection => {
@@ -73,8 +60,13 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
     }
 
     render() {
-        console.log('DashboardPage.render');
+        const {
+            serverErrors,
+            infrastructure = { regions: [] }
+        } = this.props;
         const infrastructureSelection = this.infrastructureSelection;
+
+        serverErrors.forEach(error => console.error('Server Error:', error));
 
         return <div className={styles.container}>
 
@@ -86,7 +78,7 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
 
             <header className={styles.header}>
                 <DashboardHeader
-                    infrastructure={this.props.infrastructure}
+                    infrastructure={infrastructure}
                     onInfrastructureSelection={this.handleInfrastructureSelection}
                     infrastructureSelection={infrastructureSelection}
                 />
