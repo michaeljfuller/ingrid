@@ -1,8 +1,6 @@
-import {ApolloServer} from "apollo-server-micro";
-import apolloConfig from "../../api/graphql/config";
+import createServer from "../../api/graphql/createServer";
 
-const server = new ApolloServer(apolloConfig);
-export default server.createHandler({ path: "/api/graphql" });
+export default createServer().createHandler({ path: "/api/graphql" });
 
 export const config = {
     api: {
