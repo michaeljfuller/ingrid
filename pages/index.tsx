@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps<DashboardPageServerSideProps
 
     return {
         props: {
-            infrastructure: infrastructureRequest.data?.infrastructure,
+            infrastructure: infrastructureRequest.data?.allInfrastructure,
             serverErrors: [
                 ...(infrastructureRequest.errors?.map(error => error.message) || []) ,
             ]
