@@ -3,6 +3,7 @@ import {repeat} from "../../utils/array";
 
 export interface DashboardProps {
     infrastructureSelection?: InfrastructureSelection;
+    stats?: Stats;
 }
 
 export default function Dashboard(props: DashboardProps) {

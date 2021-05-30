@@ -12,9 +12,12 @@ import {getAllInfrastructureFromServer} from "../api/graphql/queries/getAllInfra
 import updateParsedUrlQuery from "../utils/pages/updateParsedUrlQuery";
 import {mapObject} from "../utils/object";
 import {dateToISO, dateFromISO, subtractDate} from "../utils/date";
+import {getStatsFromInfrastructureFromServer} from "../api/graphql/queries/stats/getStatsFromInfrastructure";
+import createServer from "../api/graphql/createServer";
 
 interface DashboardPageServerSideProps {
     infrastructure?: Infrastructure;
+    stats?: Stats;
     serverErrors: string[];
 }
 interface DashboardPageProps extends DashboardPageServerSideProps {
@@ -23,13 +26,20 @@ interface DashboardPageProps extends DashboardPageServerSideProps {
 
 //https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
 export const getServerSideProps: GetServerSideProps<DashboardPageServerSideProps> = async context => {
-    const infrastructureRequest = await getAllInfrastructureFromServer();
+    const graphServer = createServer();
+    const query = context.query as UrlQuery;
+    const [from, to] = dateRangeFromUrlQuery(query);
+
+    const infrastructureRequest = await getAllInfrastructureFromServer(graphServer);
+    const statsRequest = await getStatsFromInfrastructureFromServer(from, to, graphServer);
 
     return {
         props: {
             infrastructure: infrastructureRequest.data?.allInfrastructure,
+            stats: statsRequest.data?.statsFromInfrastructure.stats,
             serverErrors: [
-                ...(infrastructureRequest.errors?.map(error => error.message) || []) ,
+                ...(infrastructureRequest.errors?.map(error => error.message) || []),
+                ...(statsRequest.errors?.map(error => error.message) || []),
             ]
         },
     }
@@ -72,11 +82,8 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
     }
 
     /** Get DateRange from the queryString */
-    get dateRange(): DateRange {
-        const {from, to} = this.props.router.query as UrlQuery;
-        let dateTo = to ? dateFromISO(to) : new Date();
-        let dateFrom = from ? dateFromISO(from) : subtractDate(dateTo, {days: 7});
-        return [dateFrom, dateTo];
+    get dateRange() {
+        return dateRangeFromUrlQuery(this.props.router.query as UrlQuery);
     }
 
     handleInfrastructureSelection: DashboardHeaderProps['onInfrastructureSelection'] = async selection => {
@@ -89,7 +96,8 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
     render() {
         const {
             serverErrors,
-            infrastructure = { regions: [] }
+            infrastructure = { regions: [] },
+            stats,
         } = this.props;
         const infrastructureSelection = this.infrastructureSelection;
 
@@ -114,9 +122,16 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
             </header>
 
             <main className={styles.main}>
-                <Dashboard infrastructureSelection={infrastructureSelection} />
+                <Dashboard infrastructureSelection={infrastructureSelection} stats={stats} />
             </main>
 
         </div>;
     }
+}
+
+/** Get DateRange from the queryString, with defaults. */
+function dateRangeFromUrlQuery({from, to}: UrlQuery): DateRange<true> {
+    let dateTo = to ? dateFromISO(to) : new Date();
+    let dateFrom = from ? dateFromISO(from) : subtractDate(dateTo, {days: 7});
+    return [dateFrom, dateTo];
 }
