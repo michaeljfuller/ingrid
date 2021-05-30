@@ -10,7 +10,7 @@ export default function Dashboard(props: DashboardProps) {
         <h1>Dashboard</h1>
         <div className={css.widgetArea}>{
             repeat(12, index => (
-                <div className={css.widget}>
+                <div key={index} className={css.widget}>
                     <span>{index+1}</span>
                 </div>
             ))

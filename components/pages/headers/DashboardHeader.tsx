@@ -1,6 +1,7 @@
 import PageHeader from "../PageHeader";
 import css from "./DashboardHeader/DashboardHeader.module.css";
 import InfrastructureSelection from "../../forms/fieldset/InfrastructureSelection";
+import DateRangePicker from "../../forms/input/DateRangePicker";
 
 export interface DashboardHeaderProps {
     infrastructure: Infrastructure;
@@ -19,6 +20,7 @@ export const DashboardHeader = function DashboardHeader(props: DashboardHeaderPr
                 selection={props.infrastructureSelection}
                 onSelection={props.onInfrastructureSelection}
             />
+            <DateRangePicker />
         </form>
     </PageHeader>
 };
