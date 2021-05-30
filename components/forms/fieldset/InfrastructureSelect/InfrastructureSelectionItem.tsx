@@ -13,7 +13,7 @@ export interface InfrastructureSelectionItemProps {
     items: Array<{
         id: string;
         name: string;
-    }>
+    }>;
 }
 
 /**
@@ -45,7 +45,8 @@ export default InfrastructureSelectionItem;
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 150,
+        minWidth: 100,
+        maxWidth: 150,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
