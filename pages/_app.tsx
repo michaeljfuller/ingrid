@@ -2,6 +2,10 @@ import React from 'react';
 import type { AppProps as NextAppProps } from 'next/app'
 import { useRouter } from 'next/router'
 
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+
 import '../styles/globals.css'
 import {WithLayout} from "../decorators/pages/UseLayout";
 import MaterialUiTheme from "../components/pages/MaterialUiTheme";
@@ -29,9 +33,11 @@ function MyApp({
   }, []);
 
   return <>
-    <MaterialUiTheme>
-      {page}
-    </MaterialUiTheme>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <MaterialUiTheme>
+        {page}
+      </MaterialUiTheme>
+    </MuiPickersUtilsProvider>
   </>;
 }
 export default MyApp
