@@ -5,8 +5,10 @@ import DateRangePicker from "../../forms/input/DateRangePicker";
 
 export interface DashboardHeaderProps {
     infrastructure: Infrastructure;
-    onInfrastructureSelection: (selection: InfrastructureSelection) => void;
     infrastructureSelection: InfrastructureSelection;
+    onInfrastructureSelection: (selection: InfrastructureSelection) => void;
+    dateRange: DateRange;
+    onDateRange: (range: DateRange) => void;
 }
 
 /**
@@ -22,7 +24,11 @@ export const DashboardHeader = function DashboardHeader(props: DashboardHeaderPr
                 onSelection={props.onInfrastructureSelection}
             />
             <div className={classes.dateRangePickerContainer}>
-                <DateRangePicker className={classes.DateRangePicker} />
+                <DateRangePicker
+                    className={classes.DateRangePicker}
+                    dateRange={props.dateRange}
+                    onDateRange={props.onDateRange}
+                />
             </div>
         </form>
     </PageHeader>

@@ -7,8 +7,11 @@ import UseLayout from "../decorators/pages/UseLayout";
 import styles from '../styles/Page.module.css'
 import Dashboard from "../components/screens/Dashboard";
 import DashboardHeader, {DashboardHeaderProps} from "../components/pages/headers/DashboardHeader";
-import getInfrastructureSelectionFromIds from "../utils/infrastructure/getInfrastructureSelectionFromIds";
+import getInfrastructureSelectionFromIds, {InfrastructureSelectionIds} from "../utils/infrastructure/getInfrastructureSelectionFromIds";
 import {getAllInfrastructureFromServer} from "../api/graphql/queries/getAllInfrastructure";
+import updateParsedUrlQuery from "../utils/pages/updateParsedUrlQuery";
+import {mapObject} from "../utils/object";
+import {dateToISO, dateFromISO, subtractDate} from "../utils/date";
 
 interface DashboardPageServerSideProps {
     infrastructure?: Infrastructure;
@@ -32,31 +35,55 @@ export const getServerSideProps: GetServerSideProps<DashboardPageServerSideProps
     }
 }
 
+type UrlQuery = InfrastructureSelectionIds & {
+    from?: string;
+    to?: string;
+}
+
 @UseLayout()
 export default class DashboardPage extends React.PureComponent<DashboardPageProps> {
 
     /** Update queryString with the InfrastructureSelection. */
     private updateInfrastructureSelectionUri(infrastructure: InfrastructureSelection) {
-        const query = {...this.props.router.query};
-        const keys = ['region', 'building', 'floor', 'room'] as Array<keyof InfrastructureSelection>;
-        keys.forEach(key => {
-            delete query[key];
-            const id = infrastructure[key]?.id;
-            if (id) query[key] = encodeURI(id);
-        });
+        const query = updateParsedUrlQuery(
+            this.props.router.query,
+            mapObject(infrastructure, item => ({value: item.id})),
+            ['region', 'building', 'floor', 'room']
+        );
+        return this.props.router.replace({ query });
+    }
+
+    /** Update queryString with the DateRange. */
+    private updateDateSelectionUri(dateRange?: DateRange) {
+        const [from, to] = dateRange || [];
+        const query = updateParsedUrlQuery(
+            this.props.router.query,
+            mapObject({from, to}, date => ({ value: date && dateToISO(date) })),
+        );
         return this.props.router.replace({ query });
     }
 
     /** Get InfrastructureSelection from the queryString */
     get infrastructureSelection(): InfrastructureSelection {
         if (this.props.infrastructure) {
-            return getInfrastructureSelectionFromIds(this.props.infrastructure, this.props.router.query as any)
+            return getInfrastructureSelectionFromIds(this.props.infrastructure, this.props.router.query as UrlQuery)
         }
         return {};
     }
 
+    /** Get DateRange from the queryString */
+    get dateRange(): DateRange {
+        const {from, to} = this.props.router.query as UrlQuery;
+        let dateTo = to ? dateFromISO(to) : new Date();
+        let dateFrom = from ? dateFromISO(from) : subtractDate(dateTo, {days: 7});
+        return [dateFrom, dateTo];
+    }
+
     handleInfrastructureSelection: DashboardHeaderProps['onInfrastructureSelection'] = async selection => {
         await this.updateInfrastructureSelectionUri(selection);
+    }
+    handleDateRangeSelection: DashboardHeaderProps['onDateRange'] = async selection => {
+        await this.updateDateSelectionUri(selection);
     }
 
     render() {
@@ -79,8 +106,10 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
             <header className={styles.header}>
                 <DashboardHeader
                     infrastructure={infrastructure}
-                    onInfrastructureSelection={this.handleInfrastructureSelection}
                     infrastructureSelection={infrastructureSelection}
+                    onInfrastructureSelection={this.handleInfrastructureSelection}
+                    dateRange={this.dateRange}
+                    onDateRange={this.handleDateRangeSelection}
                 />
             </header>
 

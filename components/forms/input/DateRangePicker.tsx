@@ -1,11 +1,6 @@
 import React from 'react';
-import millisecondsToHours from 'date-fns/millisecondsToHours';
-import daysToWeeks from 'date-fns/daysToWeeks';
-import endOfDay from 'date-fns/endOfDay';
-import startOfDay from 'date-fns/startOfDay';
 
 import {KeyboardDatePickerProps, DatePicker} from '@material-ui/pickers';
-import type {MaterialUiPickersDate} from "@material-ui/pickers/typings/date";
 
 import PopupInput from "./PopupInput";
 
@@ -13,28 +8,24 @@ import PopupInput from "./PopupInput";
 
 export interface DateRangePickerProps {
     id?: string;
+    dateRange?: DateRange;
+    onDateRange: (range: DateRange) => void;
     dateFrom?: Date;
     dateTo?: Date;
     className?: string;
 }
 
 export function DateRangePicker(props: DateRangePickerProps) {
-    const [dateFrom, setDateFrom] = React.useState<MaterialUiPickersDate>(null);
-    const [dateTo, setDateTo] = React.useState<MaterialUiPickersDate>(null);
+    const [
+        dateFrom = new Date,
+        dateTo = new Date
+    ] = props.dateRange || [];
 
-    const msDifference = dateTo && dateFrom ? dateTo.valueOf() - dateFrom.valueOf() : 0;
-    const daysDifference = millisecondsToHours(msDifference/24);
-    const weeksDifference = daysToWeeks(daysDifference);
-
-    console.log('DateRangePicker', {
-        msDifference, daysDifference, weeksDifference, dateFrom, dateTo
-    });
-
-    const onDateFrom: KeyboardDatePickerProps['onChange'] = date => {
-        setDateFrom(date && startOfDay(date));
+    const onDateFrom: KeyboardDatePickerProps['onChange'] = selected => {
+        props.onDateRange([selected, dateTo]);
     };
-    const onDateTo: KeyboardDatePickerProps['onChange'] = date => {
-        setDateTo(date && endOfDay(date));
+    const onDateTo: KeyboardDatePickerProps['onChange'] = selected => {
+        props.onDateRange([dateFrom, selected]);
     };
 
     return <PopupInput
@@ -54,12 +45,14 @@ export function DateRangePicker(props: DateRangePickerProps) {
                 value={dateFrom}
                 onChange={onDateFrom}
                 disableFuture
+                maxDate={dateTo}
             />
             <DatePicker
                 variant="static"
                 value={dateTo}
                 onChange={onDateTo}
-                disablePast
+                disableFuture
+                minDate={dateFrom}
             />
         </div>
     </PopupInput>;
