@@ -21,8 +21,8 @@ export const DashboardHeader = function DashboardHeader(props: DashboardHeaderPr
                 selection={props.infrastructureSelection}
                 onSelection={props.onInfrastructureSelection}
             />
-            <div className={classes.dateRangePicker}>
-                <DateRangePicker />
+            <div className={classes.dateRangePickerContainer}>
+                <DateRangePicker className={classes.DateRangePicker} />
             </div>
         </form>
     </PageHeader>
@@ -35,9 +35,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         overflowX: 'auto',
     },
-    dateRangePicker: {
+    dateRangePickerContainer: {
         minWidth: 150,
         overflow: 'hidden',
+    },
+    DateRangePicker: {
         // Adjust dateRangePicker to match other items
         margin: theme.spacing(1),
         height: 48,
