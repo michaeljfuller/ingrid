@@ -100,3 +100,8 @@ declare interface CleaningRating {
 }
 
 //</editor-fold>
+//<editor-fold desc="Misc">
+
+declare type DateRange = [Date|null, Date|null];
+
+//</editor-fold>
