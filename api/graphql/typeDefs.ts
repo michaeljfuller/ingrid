@@ -4,32 +4,40 @@ const scalarTypes = `
     scalar Date
 `;
 const infrastructureTypes = `
-    type Infrastructure {
+    interface InfrastructureStatOwner {
+        stats: Stats!
+    }
+    interface InfrastructureLayer {
+        id: ID!
+        name: String!
+    }
+
+    type Infrastructure implements InfrastructureStatOwner {
+        stats: Stats!
         regions: [Region!]
-        stats: Stats
     }
-    type Region {
+    type Region implements InfrastructureLayer & InfrastructureStatOwner {
         id: ID!
         name: String!
+        stats: Stats!
         buildings: [Building!]
-        stats: Stats
     }
-    type Building {
+    type Building implements InfrastructureLayer & InfrastructureStatOwner {
         id: ID!
         name: String!
+        stats: Stats!
         floors: [Floor!]
-        stats: Stats
     }
-    type Floor {
+    type Floor implements InfrastructureLayer & InfrastructureStatOwner {
         id: ID!
         name: String!
+        stats: Stats!
         rooms: [Room!]
-        stats: Stats
     }
-    type Room {
+    type Room implements InfrastructureLayer & InfrastructureStatOwner {
         id: ID!
-        name: String
-        stats: Stats
+        name: String!
+        stats: Stats!
     }
 `;
 const statTypes = `
