@@ -12,7 +12,7 @@ export function mapObject<
 ): Result {
     const result = {} as any;
     for (const [key, value] of Object.entries(target)) {
-        const item = callback(key, value);
+        const item = callback(value, key);
         if (item.remove !== true) {
             result[item.key || key] = ('value' in item) ? item.value : value;
         }
