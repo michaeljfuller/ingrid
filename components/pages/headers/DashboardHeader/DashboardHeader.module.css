@@ -1,4 +1,10 @@
-.root fieldset {
-    border: none;
-    padding: 0;
+.form {
+    display: flex;
+    flex-direction: row;
+    padding-right: 10px;
+    overflow: hidden;
+}
+
+.dateRangePicker {
+    padding-top: 24px;
 }

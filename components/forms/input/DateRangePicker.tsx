@@ -15,6 +15,7 @@ export interface DateRangePickerProps {
     id?: string;
     dateFrom?: Date;
     dateTo?: Date;
+    className?: string;
 }
 
 export function DateRangePicker(props: DateRangePickerProps) {
@@ -45,6 +46,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
         placeholder="Date Range"
         hiddenLabel
         required
+        className={props.className}
     >
         <div style={{ paddingLeft: 10, paddingRight: 10, display: 'flex', flexDirection: 'row' }}>
             <DatePicker

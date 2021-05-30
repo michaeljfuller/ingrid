@@ -1,5 +1,6 @@
 import SelectionItem, {InfrastructureSelectionItemProps} from "./InfrastructureSelect/InfrastructureSelectionItem";
 import getInfrastructureSelectionFromIds, {InfrastructureSelectionIds} from "../../../utils/infrastructure/getInfrastructureSelectionFromIds";
+import css from "./InfrastructureSelect/InfrastructureSelection.module.css";
 
 export interface InfrastructureSelectionProps {
     infrastructure: Infrastructure;
@@ -28,7 +29,7 @@ export function InfrastructureSelection({
     const onFloor = createInfrastructureSelectionHandler(infrastructure, ids, onSelection, 'floor');
     const onRoom = createInfrastructureSelectionHandler(infrastructure, ids, onSelection, 'room');
 
-    return <fieldset>
+    return <fieldset className={css.root}>
         <SelectionItem id="InfrastructureSelection-region"   label="Region"   value={region?.id || ''}   onChange={onRegion}   items={infrastructure.regions}  />
         <SelectionItem id="InfrastructureSelection-building" label="Building" value={building?.id || ''} onChange={onBuilding} items={region?.buildings || []} />
         <SelectionItem id="InfrastructureSelection-floor"    label="Floor"    value={floor?.id || ''}    onChange={onFloor}    items={building?.floors || []}  />

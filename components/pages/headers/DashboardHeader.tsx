@@ -13,14 +13,16 @@ export interface DashboardHeaderProps {
  * The header on the Dashboard page, allowing the user to select filters.
  */
 export const DashboardHeader = function DashboardHeader(props: DashboardHeaderProps) {
-    return <PageHeader title="Dashboard" className={css.root}>
-        <form>
+    return <PageHeader title="Dashboard">
+        <form className={css.form}>
             <InfrastructureSelection
                 infrastructure={props.infrastructure}
                 selection={props.infrastructureSelection}
                 onSelection={props.onInfrastructureSelection}
             />
-            <DateRangePicker />
+            <div className={css.dateRangePicker}>
+                <DateRangePicker />
+            </div>
         </form>
     </PageHeader>
 };
