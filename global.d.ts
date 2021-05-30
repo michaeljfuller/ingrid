@@ -1,32 +1,26 @@
 //<editor-fold desc="Infrastructure">
 
-declare interface Infrastructure {
+declare interface InfrastructureStatOwner {
+    stats?: Stats;
+}
+declare interface InfrastructureLayer extends InfrastructureStatOwner {
+    id: string;
+    name?: string;
+}
+
+declare interface Infrastructure extends InfrastructureStatOwner {
     regions: Region[];
-    stats?: Stats;
 }
-declare interface Region {
-    id: string;
-    name: string;
+declare interface Region extends InfrastructureLayer {
     buildings: Building[];
-    stats?: Stats;
 }
-declare interface Building {
-    id: string;
-    name: string;
+declare interface Building extends InfrastructureLayer {
     floors: Floor[];
-    stats?: Stats;
 }
-declare interface Floor {
-    id: string;
-    name: string;
+declare interface Floor extends InfrastructureLayer {
     rooms: Room[];
-    stats?: Stats;
 }
-declare interface Room {
-    id: string;
-    name: string;
-    stats?: Stats;
-}
+declare interface Room extends InfrastructureLayer {}
 
 type InfrastructureType = 'region'|'building'|'floor'|'room';
 type InfrastructureFromType<T extends InfrastructureType> = (
@@ -102,6 +96,10 @@ declare interface CleaningRating {
 //</editor-fold>
 //<editor-fold desc="Misc">
 
-declare type DateRange = [Date|null, Date|null];
+/** Represents "from" and "to" Date. Generic, so you can pass true to say it's required. */
+declare type DateRange<Required extends true|false = false> = [
+    Date|(Required extends true ? never : null),
+    Date|(Required extends true ? never : null)
+];
 
 //</editor-fold>
