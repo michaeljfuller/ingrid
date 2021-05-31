@@ -4,7 +4,7 @@ import createServer from "../createServer";
 
 export const getAllInfrastructureQuery = `
 {
-  infrastructure {
+  allInfrastructure: infrastructure {
     regions {
       id, name, buildings {
         id, name, floors {
@@ -18,7 +18,7 @@ export const getAllInfrastructureQuery = `
 }
 `;
 export interface GetAllInfrastructureResponse {
-    infrastructure: Infrastructure;
+    allInfrastructure: Infrastructure;
 }
 
 export function getAllInfrastructureFromServer(server: ApolloServer = createServer()) {

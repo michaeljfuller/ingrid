@@ -4,7 +4,7 @@
 export function getInfrastructureSelectionFromIds<Type extends InfrastructureType>(
     infrastructure: Infrastructure,
     ids: InfrastructureSelectionIds,
-): Partial<InfrastructureSelection> {
+): InfrastructureSelection {
     const region = ids.region ? infrastructure.regions.find(item => item.id === ids.region) : undefined;
     const building = ids.building ? region?.buildings.find(item => item.id === ids.building) : undefined;
     const floor = ids.floor ? building?.floors.find(item => item.id === ids.floor) : undefined;

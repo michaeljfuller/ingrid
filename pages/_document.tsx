@@ -40,7 +40,6 @@ class MyDocument extends Document {
             <Html>
                 <Head>
                     <meta name="theme-color" content={theme.palette.primary.main} /> {/* PWA primary color */}
-                    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
                 </Head>
                 <body>
                 <Main />

@@ -10,10 +10,7 @@ export interface InfrastructureSelectionItemProps {
     label: string;
     value: string;
     onChange: SelectProps['onChange'];
-    items: Array<{
-        id: string;
-        name: string;
-    }>
+    items: InfrastructureLayer[];
 }
 
 /**
@@ -35,7 +32,7 @@ export function InfrastructureSelectionItem(props: InfrastructureSelectionItemPr
             disabled={props.items.length === 0}
         >
             {props.items.map(
-                item => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
+                item => <MenuItem key={item.id} value={item.id}>{item.name || item.id}</MenuItem>
             )}
         </Select>
     </FormControl>
@@ -45,7 +42,8 @@ export default InfrastructureSelectionItem;
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 150,
+        minWidth: 100,
+        maxWidth: 150,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),

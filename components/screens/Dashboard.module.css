@@ -1,0 +1,32 @@
+.Dashboard pre {
+  padding: 2px 10px;
+  font-size: 8pt;
+  font-style: italic;
+  border: 1px solid darkgray;
+  color: grey;
+  background-color: #EEE;
+}
+.widgetArea {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 5px;
+}
+.widget {
+  /* Size */
+  flex: 1;
+  min-width: 100px;
+  min-height: 100px;
+
+  /* Box Color */
+  border: 1px solid darkred;
+  background-color: red;
+
+  /* Contents */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

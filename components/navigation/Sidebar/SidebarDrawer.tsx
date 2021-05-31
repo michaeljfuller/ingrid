@@ -1,7 +1,7 @@
 import React, {PropsWithChildren} from 'react';
 import clsx from "clsx";
 import Drawer, {DrawerClassKey} from "@material-ui/core/Drawer";
-import {ThemeOfStyles, WithStylesOptions} from "@material-ui/styles/withStyles/withStyles";
+import type {ThemeOfStyles, WithStylesOptions} from "@material-ui/styles/withStyles/withStyles";
 import {makeStyles, Theme} from "@material-ui/core/styles";
 
 export interface SidebarDrawerProps {

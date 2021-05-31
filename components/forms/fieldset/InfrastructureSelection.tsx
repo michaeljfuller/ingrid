@@ -3,8 +3,8 @@ import getInfrastructureSelectionFromIds, {InfrastructureSelectionIds} from "../
 
 export interface InfrastructureSelectionProps {
     infrastructure: Infrastructure;
-    selection: Partial<InfrastructureSelection>;
-    onSelection: (selection: Partial<InfrastructureSelection>) => void;
+    selection: InfrastructureSelection;
+    onSelection: (selection: InfrastructureSelection) => void;
 }
 
 /**
@@ -28,7 +28,7 @@ export function InfrastructureSelection({
     const onFloor = createInfrastructureSelectionHandler(infrastructure, ids, onSelection, 'floor');
     const onRoom = createInfrastructureSelectionHandler(infrastructure, ids, onSelection, 'room');
 
-    return <fieldset>
+    return <fieldset style={{ display: 'contents' }}>
         <SelectionItem id="InfrastructureSelection-region"   label="Region"   value={region?.id || ''}   onChange={onRegion}   items={infrastructure.regions}  />
         <SelectionItem id="InfrastructureSelection-building" label="Building" value={building?.id || ''} onChange={onBuilding} items={region?.buildings || []} />
         <SelectionItem id="InfrastructureSelection-floor"    label="Floor"    value={floor?.id || ''}    onChange={onFloor}    items={building?.floors || []}  />

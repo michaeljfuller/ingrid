@@ -1,5 +1,5 @@
 import React, {ReactElement, ComponentType, Attributes} from "react";
-import {StandardLayout, StandardLayoutProps} from "../../components/pages/layout/StandardLayout";
+import {StandardLayout, StandardLayoutProps} from "../../../components/pages/layout/StandardLayout";
 
 /**
  * Use the given LayoutComponent on the target page, with the passed props.
