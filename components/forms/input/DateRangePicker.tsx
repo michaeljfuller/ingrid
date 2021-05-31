@@ -1,6 +1,6 @@
 import React from 'react';
-
 import {KeyboardDatePickerProps, DatePicker} from '@material-ui/pickers';
+import withStyles from "@material-ui/styles/withStyles";
 
 import PopupInput from "./PopupInput";
 
@@ -39,7 +39,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
         required
         className={props.className}
     >
-        <div style={{ paddingLeft: 10, paddingRight: 10, display: 'flex', flexDirection: 'row' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: 1, paddingBottom: 5 }}>
             <DatePicker
                 variant="static"
                 value={dateFrom}
