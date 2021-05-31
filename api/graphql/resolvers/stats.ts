@@ -6,7 +6,7 @@ import {
     createSatisfactionRating,
     createTemperatureRating
 } from "../data/stats";
-import {dateFromISO} from "../../../utils/date";
+import {dateDistance, dateFromISO, endOfDay, startOfDay} from "../../../utils/date";
 import {getGraphPaths} from "../util/getPaths";
 import {generateNumberFromString} from "../../../utils/string";
 
@@ -48,28 +48,28 @@ export function addStatsResolvers<
         let result = removeStats(item) as WithStatsResolvers<Type>;
         result.stats = {
             health: (args, _, info) => createHealthRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
             satisfaction: (args, _, info) => createSatisfactionRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
             temperature: (args, _, info) => createTemperatureRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
             occupancy: (args, _, info) => createOccupancyRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
             indoorAirQuality: (args, _, info) => createIndoorAirQualityRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
             noise: (args, _, info) => createNoiseRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
             light: (args, _, info) => createLightRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
             cleaning: (args, _, info) => createCleaningRating(
-                generateSeed(args, info)
+                generateSeed(args, info), generateOverride(args)
             ),
         };
         return result;
@@ -83,4 +83,12 @@ function generateSeed(args: StatsArgs, info: GraphQLResolveInfo) {
     const to = dateFromISO(args.to);
     const pathKeys = getGraphPaths(info).map(path => path.key);
     return to.valueOf() - from.valueOf() + generateNumberFromString(pathKeys.join());
+}
+
+function generateOverride(args: StatsArgs): {periodLabel: string} {
+    const from = startOfDay(dateFromISO(args.from));
+    const to = endOfDay(dateFromISO(args.to));
+    return {
+        periodLabel: dateDistance(from, to),
+    }
 }
