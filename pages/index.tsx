@@ -57,7 +57,7 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
     private updateInfrastructureSelectionUri(infrastructure: InfrastructureSelection) {
         const query = updateParsedUrlQuery(
             this.props.router.query,
-            mapObject(infrastructure, item => ({value: item.id})),
+            mapObject(infrastructure, item => ({value: item?.id, remove: !item})),
             ['region', 'building', 'floor', 'room']
         );
         return this.props.router.replace({ query });
