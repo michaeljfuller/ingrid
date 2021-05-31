@@ -41,9 +41,7 @@ function removeStats<Type extends {stats?: any}>(item: Type) {
  * Add StatsResolvers to the passed entity
  * @link https://www.apollographql.com/docs/tutorial/resolvers/#define-other-resolvers
  */
-export function addStatsResolvers<
-    Type extends Infrastructure|Region|Building|Floor|Room|undefined
->(item: Type): WithStatsResolvers<Type>|undefined {
+export function addStatsResolvers<Type>(item: Type): WithStatsResolvers<Type>|undefined {
     if (item) {
         let result = removeStats(item) as WithStatsResolvers<Type>;
         result.stats = {

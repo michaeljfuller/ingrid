@@ -3,12 +3,15 @@
 declare interface InfrastructureStatOwner {
     stats?: Stats;
 }
-declare interface InfrastructureLayer extends InfrastructureStatOwner {
+declare interface InfrastructureRecordOwner {
+    records?: Records;
+}
+declare interface InfrastructureLayer extends InfrastructureStatOwner, InfrastructureRecordOwner {
     id: string;
     name?: string;
 }
 
-declare interface Infrastructure extends InfrastructureStatOwner {
+declare interface Infrastructure extends InfrastructureStatOwner, InfrastructureRecordOwner {
     regions: Region[];
 }
 declare interface Region extends InfrastructureLayer {
@@ -103,18 +106,16 @@ declare interface Records {
     temperatures?: Temperatures;
 }
 
-declare enum AlertLevel { Low, Mid, High }
-
 declare interface AlertRecord {
     id: string;
     title?: string;
     message?: string;
-    level?: AlertLevel;
+    level?: import("./utils/enums").AlertLevel;
     assignee?: User;
     timestamp?: Date;
 }
 declare interface Alerts {
-    alerts: AlertRecord[];
+    items: AlertRecord[];
 }
 
 declare interface OccupancyRecord {

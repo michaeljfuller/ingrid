@@ -1,6 +1,13 @@
 export default `
+    type Records {
+        alerts             (from: Date!, to: Date!): Alerts
+        occupancies        (from: Date!, to: Date!): Occupancies
+        indoorAirQualities (from: Date!, to: Date!): IndoorAirQualities
+        temperatures       (from: Date!, to: Date!): Temperatures
+    }
+    
     type Alerts {
-        alerts: [AlertRecord!]
+        items: [AlertRecord!]
     }
     type Occupancies {
         dailyOccupancy: [OccupancyRecord!]
