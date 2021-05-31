@@ -6,6 +6,9 @@ import {
     createSatisfactionRating,
     createTemperatureRating
 } from "../data/stats";
+import {dateFromISO} from "../../../utils/date";
+import {getGraphPaths} from "../util/getPaths";
+import {generateNumberFromString} from "../../../utils/string";
 
 /** The collection of resolvers in the Stats entity */
 export type StatsResolvers = {
@@ -19,8 +22,8 @@ export type StatsItemResolver<Result> = (
     info: GraphQLResolveInfo
 ) => Result;
 interface StatsArgs {
-    from: unknown;
-    to: unknown;
+    from: string;
+    to: string;
 }
 
 /** Add StatsResolvers to an object, replacing the original. */
@@ -74,11 +77,10 @@ export function addStatsResolvers<
     return undefined;
 }
 
+/** Return a deterministic number from StatsArgs and GraphQLResolveInfo */
 function generateSeed(args: StatsArgs, info: GraphQLResolveInfo) {
-    let seed = 0;
-    for (let i=0; i < info.parentType.name.length; i++) {
-        seed += info.parentType.name.charCodeAt(i);
-    }
-    return seed;
+    const from = dateFromISO(args.from);
+    const to = dateFromISO(args.to);
+    const pathKeys = getGraphPaths(info).map(path => path.key);
+    return to.valueOf() - from.valueOf() + generateNumberFromString(pathKeys.join());
 }
-
