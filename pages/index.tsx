@@ -11,7 +11,7 @@ import getInfrastructureSelectionFromIds, {InfrastructureSelectionIds} from "../
 import {getAllInfrastructureFromServer} from "../api/graphql/queries/getAllInfrastructure";
 import updateParsedUrlQuery from "../utils/pages/updateParsedUrlQuery";
 import {mapObject} from "../utils/object";
-import {dateToISO, dateFromISO, subtractDate} from "../utils/date";
+import {dateToISO, dateFromISO, subtractDate, startOfDay} from "../utils/date";
 import {getStatsFromInfrastructureFromServer} from "../api/graphql/queries/stats/getStatsFromInfrastructure";
 import createServer from "../api/graphql/createServer";
 
@@ -131,7 +131,7 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
 
 /** Get DateRange from the queryString, with defaults. */
 function dateRangeFromUrlQuery({from, to}: UrlQuery): DateRange<true> {
-    let dateTo = to ? dateFromISO(to) : new Date();
-    let dateFrom = from ? dateFromISO(from) : subtractDate(dateTo, {days: 7});
+    let dateTo = to ? dateFromISO(to) : startOfDay(new Date());
+    let dateFrom = from ? dateFromISO(from) : subtractDate(dateTo, {days: 7-1});
     return [dateFrom, dateTo];
 }
