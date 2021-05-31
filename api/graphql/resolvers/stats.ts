@@ -7,8 +7,7 @@ import {
     createTemperatureRating
 } from "../data/stats";
 import {dateDistance, dateFromISO, endOfDay, startOfDay} from "../../../utils/date";
-import {getGraphPaths} from "../util/getPaths";
-import {generateNumberFromString} from "../../../utils/string";
+import {generateSeed} from "../util/generateSeed";
 
 /** The collection of resolvers in the Stats entity */
 export type StatsResolvers = {
@@ -21,6 +20,7 @@ export type StatsItemResolver<Result> = (
     context: unknown,
     info: GraphQLResolveInfo
 ) => Result;
+
 interface StatsArgs {
     from: string;
     to: string;
@@ -75,14 +75,6 @@ export function addStatsResolvers<
         return result;
     }
     return undefined;
-}
-
-/** Return a deterministic number from StatsArgs and GraphQLResolveInfo */
-function generateSeed(args: StatsArgs, info: GraphQLResolveInfo) {
-    const from = dateFromISO(args.from);
-    const to = dateFromISO(args.to);
-    const pathKeys = getGraphPaths(info).map(path => path.key);
-    return to.valueOf() - from.valueOf() + generateNumberFromString(pathKeys.join());
 }
 
 function generateOverride(args: StatsArgs): {periodLabel: string} {
