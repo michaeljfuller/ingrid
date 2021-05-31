@@ -1,7 +1,14 @@
+import records from "./typeDefs/records";
+
 // The GraphQL schema in string form
 
 const scalarTypes = `
     scalar Date
+`;
+const userTypes = `
+    type User {
+        email: String!
+    }
 `;
 const infrastructureTypes = `
     interface InfrastructureStatOwner {
@@ -52,44 +59,44 @@ const statTypes = `
         cleaning(from: Date, to: Date): CleaningRating
     }
     type HealthRating {
-        percent: Float
-        percentChange: Float
-        periodLabel: String
+        percent: Float!
+        percentChange: Float!
+        periodLabel: String!
     }
     type SatisfactionRating {
-        percent: Float
-        percentChange: Float
-        periodLabel: String
+        percent: Float!
+        percentChange: Float!
+        periodLabel: String!
     }
     type TemperatureRating {
-        celsius: Float
-        celsiusChange: Float
-        periodLabel: String
+        celsius: Float!
+        celsiusChange: Float!
+        periodLabel: String!
     }
     type OccupancyRating {
-        percent: Float
-        percentChange: Float
-        periodLabel: String
+        percent: Float!
+        percentChange: Float!
+        periodLabel: String!
     }
     type IndoorAirQualityRating {
-        value: Float
-        valueChange: Float
-        periodLabel: String
+        value: Float!
+        valueChange: Float!
+        periodLabel: String!
     }
     type NoiseRating {
-        percent: Float
-        percentChange: Float
-        periodLabel: String
+        percent: Float!
+        percentChange: Float!
+        periodLabel: String!
     }
     type LightRating {
-        percent: Float
-        percentChange: Float
-        periodLabel: String
+        percent: Float!
+        percentChange: Float!
+        periodLabel: String!
     }
     type CleaningRating {
-        percent: Float
-        percentChange: Float
-        periodLabel: String
+        percent: Float!
+        percentChange: Float!
+        periodLabel: String!
     }
 `;
 
@@ -102,6 +109,8 @@ export default `
         room(id: ID!): Room
     }
     ${scalarTypes}
+    ${userTypes}
     ${infrastructureTypes}
+    ${records}
     ${statTypes}
 `;

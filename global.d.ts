@@ -94,6 +94,61 @@ declare interface CleaningRating {
 }
 
 //</editor-fold>
+//<editor-fold desc="Records">
+
+declare enum AlertLevel { Low, Mid, High }
+
+declare interface AlertRecord {
+    id: string;
+    title?: string;
+    message?: string;
+    level?: AlertLevel;
+    assignee?: User;
+    timestamp?: Date;
+}
+declare interface AlertsResponse {
+    alerts: AlertRecord[];
+}
+
+declare interface OccupancyRecord {
+    hourlyPercentage?: number[];
+    date?: Date;
+}
+
+declare interface OccupanciesResponse {
+    dailyOccupancy: OccupancyRecord[];
+}
+
+declare interface IndoorAirQualityRecord {
+    current?: number;
+    average?: number;
+    targetUnder?: number;
+}
+declare interface IndoorAirQualitiesResponse {
+    radon?: IndoorAirQualityRecord;
+    voc?: IndoorAirQualityRecord;
+    co2?: IndoorAirQualityRecord;
+    pressure?: IndoorAirQualityRecord;
+    humidity?: IndoorAirQualityRecord;
+}
+
+declare interface TemperatureRecord {
+    hourlyCelsius?: number[];
+    targetCelsius?: number;
+    date?: Date;
+}
+declare interface TemperaturesResponse {
+    dailyTemperatures: TemperatureRecord[];
+}
+
+//</editor-fold>
+//<editor-fold desc="User">
+
+declare interface User {
+    email?: string;
+}
+
+//</editor-fold>
 //<editor-fold desc="Misc">
 
 /** Represents "from" and "to" Date. Generic, so you can pass true to say it's required. */
