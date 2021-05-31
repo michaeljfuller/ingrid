@@ -5,6 +5,7 @@ import StatsGroupWidget from "../widgets/StatsGroupWidget";
 export interface DashboardProps {
     infrastructureSelection?: InfrastructureSelection;
     stats?: Stats;
+    records?: Records;
 }
 
 export default function Dashboard(props: DashboardProps) {

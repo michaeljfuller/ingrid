@@ -13,11 +13,13 @@ import updateParsedUrlQuery from "../utils/pages/updateParsedUrlQuery";
 import {mapObject} from "../utils/object";
 import {dateToISO, dateFromISO, subtractDate, startOfDay} from "../utils/date";
 import {getStatsFromInfrastructureFromServer} from "../api/graphql/queries/stats/getStatsFromInfrastructure";
+import {getRecordsFromInfrastructureFromServer} from "../api/graphql/queries/records/getRecordsFromInfrastructure";
 import createServer from "../api/graphql/createServer";
 
 interface DashboardPageServerSideProps {
     infrastructure?: Infrastructure;
     stats?: Stats;
+    records?: Records;
     serverErrors: string[];
 }
 interface DashboardPageProps extends DashboardPageServerSideProps {
@@ -32,14 +34,17 @@ export const getServerSideProps: GetServerSideProps<DashboardPageServerSideProps
 
     const infrastructureRequest = await getAllInfrastructureFromServer(graphServer);
     const statsRequest = await getStatsFromInfrastructureFromServer(from, to, graphServer);
+    const recordsRequest = await getRecordsFromInfrastructureFromServer(from, to, graphServer);
 
     return {
         props: {
             infrastructure: infrastructureRequest.data?.allInfrastructure,
             stats: statsRequest.data?.statsFromInfrastructure.stats,
+            records: recordsRequest.data?.recordsFromInfrastructure.records,
             serverErrors: [
                 ...(infrastructureRequest.errors?.map(error => error.message) || []),
                 ...(statsRequest.errors?.map(error => error.message) || []),
+                ...(recordsRequest.errors?.map(error => error.message) || []),
             ]
         },
     }
@@ -98,6 +103,7 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
             serverErrors,
             infrastructure = { regions: [] },
             stats,
+            records,
         } = this.props;
         const infrastructureSelection = this.infrastructureSelection;
 
@@ -122,7 +128,11 @@ export default class DashboardPage extends React.PureComponent<DashboardPageProp
             </header>
 
             <main className={styles.main}>
-                <Dashboard infrastructureSelection={infrastructureSelection} stats={stats} />
+                <Dashboard
+                    infrastructureSelection={infrastructureSelection}
+                    stats={stats}
+                    records={records}
+                />
             </main>
 
         </div>;
