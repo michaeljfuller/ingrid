@@ -2,7 +2,7 @@ import {dateFromISO} from "../../../../utils/date";
 import {getWrapped, repeat} from "../../../../utils/array";
 
 export const temperatures: TemperatureRecord[] = [{
-    date: dateFromISO("2020-10-20"),
+    date: "2020-10-20",
     targetCelsius: 22,
     hourlyCelsius: [
     //    12am 1am  2am  3am  4am  5am  6am  7am  8am  9am  10am 11am
@@ -11,7 +11,7 @@ export const temperatures: TemperatureRecord[] = [{
           20,  21,  23,  21,  14,  10,  15,  21,  // ... Not yet set
     ],
 }, {
-    date: dateFromISO("2020-10-19"),
+    date: "2020-10-19",
     targetCelsius: 18,
     hourlyCelsius: [
     //    12am 1am  2am  3am  4am  5am  6am  7am  8am  9am  10am 11am
@@ -20,7 +20,7 @@ export const temperatures: TemperatureRecord[] = [{
           19,  19,  20,  19,  18,  18,  17,  18,  16,  14,  12,  10
     ],
 }, {
-    date: dateFromISO("2020-10-19"),
+    date: "2020-10-19",
     targetCelsius: 24,
     hourlyCelsius: [
     //    12am 1am  2am  3am  4am  5am  6am  7am  8am  9am  10am 11am

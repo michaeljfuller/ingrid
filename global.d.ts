@@ -112,7 +112,7 @@ declare interface AlertRecord {
     message?: string;
     level?: import("./utils/enums").AlertLevel;
     assignee?: User;
-    timestamp?: Date;
+    timestamp?: string;
 }
 declare interface Alerts {
     items: AlertRecord[];
@@ -120,7 +120,7 @@ declare interface Alerts {
 
 declare interface OccupancyRecord {
     hourlyPercentage?: number[];
-    date?: Date;
+    date?: string;
 }
 declare interface Occupancies {
     dailyOccupancy: OccupancyRecord[];
@@ -142,7 +142,7 @@ declare interface IndoorAirQualities {
 declare interface TemperatureRecord {
     hourlyCelsius?: number[];
     targetCelsius?: number;
-    date?: Date;
+    date?: string;
 }
 declare interface Temperatures {
     dailyTemperatures: TemperatureRecord[];
