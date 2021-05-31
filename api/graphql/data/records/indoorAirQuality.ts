@@ -1,5 +1,4 @@
-import {users} from "./users";
-import {dateFromISO} from "../../../utils/date";
+import {getWrapped} from "../../../../utils/array";
 
 export const radon: IndoorAirQualityRecord[] = [
     { current: 98, average: 82, targetUnder: 75 },
@@ -36,3 +35,11 @@ export const humidity: IndoorAirQualityRecord[] = [
     { current: 45, average:  38, targetUnder: 50 },
     { current: 47, average:  57, targetUnder: 50 },
 ];
+
+export const createIndoorAirQualities = (seed: number, override?: Partial<IndoorAirQualities>) => Object.assign({
+    radon: getWrapped(seed, radon),
+    voc: getWrapped(seed, voc),
+    co2: getWrapped(seed, co2),
+    pressure: getWrapped(seed, pressure),
+    humidity: getWrapped(seed, humidity),
+} as IndoorAirQualities, override);

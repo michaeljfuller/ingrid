@@ -1,7 +1,7 @@
-import {users} from "./users";
-import {dateFromISO} from "../../../utils/date";
+import {dateFromISO} from "../../../../utils/date";
+import {getWrapped, repeat} from "../../../../utils/array";
 
-export const alerts: TemperatureRecord[] = [{
+export const temperatures: TemperatureRecord[] = [{
     date: dateFromISO("2020-10-20"),
     targetCelsius: 22,
     hourlyCelsius: [
@@ -29,3 +29,7 @@ export const alerts: TemperatureRecord[] = [{
           24,  24,  25,  24,  24,  24,  23,  17,  16,  13,  12,  10
     ],
 }];
+
+export const createTemperatures = (seed: number, count = 3, override?: Partial<Temperatures>) => Object.assign({
+    dailyTemperatures: repeat(count, () => getWrapped(seed++, temperatures))
+} as Temperatures, override);

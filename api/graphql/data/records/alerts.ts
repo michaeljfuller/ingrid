@@ -1,5 +1,6 @@
-import {users} from "./users";
-import {dateFromISO} from "../../../utils/date";
+import {users} from "../users";
+import {dateFromISO} from "../../../../utils/date";
+import {getWrapped, repeat} from "../../../../utils/array";
 
 export const alerts: AlertRecord[] = [{
     id: 'a1',
@@ -23,3 +24,7 @@ export const alerts: AlertRecord[] = [{
     assignee: users[2],
     timestamp: dateFromISO("2020-10-13"),
 }];
+
+export const createAlerts = (seed: number, count = 3, override?: Partial<Alerts>) => Object.assign({
+    alerts: repeat(count, () => getWrapped(seed++, alerts))
+} as Alerts, override);
