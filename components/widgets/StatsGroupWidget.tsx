@@ -1,8 +1,13 @@
+import {memo} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from "@material-ui/core/CardContent";
 import {percentOf} from "../../utils/number";
-import StatsWidget from "./StatsWidget";
+import RawStatsWidget from "./StatsWidget";
+import {weave} from "../../utils/array";
+import HorizontalSpacer from "../ui/HorizontalSpacer";
+
+const StatsWidget = memo(RawStatsWidget);
 
 export interface StatsGroupWidgetProps {
     className?: string;
@@ -15,7 +20,7 @@ export function StatsGroupWidget(props: StatsGroupWidgetProps) {
     } = props.stats
     const styles = useStyles();
 
-    const items = [
+    let items = [
         health ? <StatsWidget
             key="health"
             title="Health Score"
@@ -72,7 +77,11 @@ export function StatsGroupWidget(props: StatsGroupWidgetProps) {
             percentChange={cleaning.percentChange}
             periodLabel={cleaning.periodLabel}
         /> : null,
-    ];
+    ].filter(item => item);
+    items = weave(
+        items,
+        index => <HorizontalSpacer key={`spacer-${index}`} className={styles.spacer} />
+    );
 
     return <Card variant="outlined" className={styles.root+" "+props.className}>
         <CardContent className={styles.CardContent}>
@@ -82,14 +91,20 @@ export function StatsGroupWidget(props: StatsGroupWidgetProps) {
 }
 export default StatsGroupWidget;
 
-const useStyles = makeStyles({
-    root: {
-        minWidth: 300,
-    },
-    CardContent: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
+const useStyles = makeStyles((theme) => {
+    return {
+        root: {
+            minWidth: 300,
+        },
+        CardContent: {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+        },
+        spacer: {
+            marginTop: theme.spacing(2),
+            marginBottom: theme.spacing(2),
+        },
+    };
 });

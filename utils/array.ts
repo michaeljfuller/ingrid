@@ -10,3 +10,14 @@ export function repeat<Type = any>(
     return result;
 }
 type RepeatCallback<Type = any> = (index: number) => Type;
+
+/** Weave items in between elements with result from the callback. */
+export function weave<Type = any>(array: Type[], callback: WeaveCallback): Type[] {
+    const result: Type[] = [];
+    array.forEach((value, index) => {
+        if (index > 0) result.push(callback(index-1));
+        result.push(value);
+    });
+    return result;
+}
+export type WeaveCallback<Type = any> = (index: number) => Type;
