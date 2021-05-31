@@ -1,5 +1,5 @@
 import {PropsWithChildren, useState, useRef, useEffect, MouseEventHandler, MutableRefObject} from "react";
-import withStyles from "@material-ui/styles/withStyles";
+import {withStyles} from "@material-ui/core/styles";
 import TextField, {TextFieldProps} from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
@@ -48,14 +48,8 @@ export function PopupInput(props: PropsWithChildren<DateRangePickerFieldProps>) 
             open={open}
             anchorEl={anchorEl}
             onClose={closePopup}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-            }}
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-            }}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'center' }}
         >
             {props.children}
         </StyledPopover>
