@@ -3,13 +3,13 @@ import Card from '@material-ui/core/Card';
 import CardContent from "@material-ui/core/CardContent";
 import VisitorOverviewWidgetItem from "./VisitorOverviewWidget/VisitorOverviewWidgetItem";
 
-export interface WidgetProps {
+export interface VisitorOverviewWidgetProps {
     className?: string;
     health?: HealthRating;
     satisfaction?: SatisfactionRating;
 }
 
-export function VisitorOverviewWidget(props: WidgetProps) {
+export function VisitorOverviewWidget(props: VisitorOverviewWidgetProps) {
     const styles = useStyles();
     return <Card variant="outlined" className={styles.root+" "+props.className}>
         <CardContent className={styles.CardContent}>
