@@ -30,16 +30,16 @@ export default `
         assignee: User
         timestamp: Date!
     }
-    type OccupancyData {
+    type OccupancyRecord {
         hourlyPercentage: [Float]!
         date: Date!
     }
-    type IndoorAirQualityData {
+    type IndoorAirQualityRecord {
         current: Int!
         average: Int!
         targetUnder: Int!
     }
-    type TemperatureData {
+    type TemperatureRecord {
         hourlyCelsius: [Int]!
         targetCelsius: Int!
         date: Date!
