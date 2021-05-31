@@ -21,3 +21,8 @@ export function weave<Type = any>(array: Type[], callback: WeaveCallback): Type[
     return result;
 }
 export type WeaveCallback<Type = any> = (index: number) => Type;
+
+/** If the passed index is out-of-range, wrap back around to the start of the array. */
+export function getWrapped<Type=any>(index: number, array: Type[]): Type {
+    return array[index % array.length];
+}
