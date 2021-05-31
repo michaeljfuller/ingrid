@@ -1,5 +1,5 @@
 import {formatISO, formatDistance, parseISO, sub} from 'date-fns';
-// export {startOfDay, endOfDay} from 'date-fns';
+export {startOfDay, endOfDay} from 'date-fns';
 
 /** Date to a machine-readable string */
 export const dateToISO = (date: Date|number) => formatISO(date, {representation: "date"});

@@ -2,7 +2,7 @@ import React from 'react';
 import {KeyboardDatePickerProps, DatePicker} from '@material-ui/pickers';
 
 import PopupInput from "./PopupInput";
-import {dateDistance} from "../../../utils/date";
+import {dateDistance, endOfDay, startOfDay} from "../../../utils/date";
 
 // https://material-ui.com/components/pickers/
 
@@ -29,7 +29,7 @@ export function DateRangePicker(props: DateRangePickerProps) {
     };
 
     let label = "Date range";
-    if (dateFrom && dateTo) label = dateDistance(dateFrom, dateTo) + " between";
+    if (dateFrom && dateTo) label = dateDistance(startOfDay(dateFrom), endOfDay(dateTo)) + " between";
 
     return <PopupInput
         value={`${dateFrom?.toLocaleDateString()} - ${dateTo?.toLocaleDateString()}`}
