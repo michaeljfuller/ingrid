@@ -49,6 +49,5 @@ const useStyles = makeStyles((theme) => ({
         // Adjust dateRangePicker to match other items
         margin: theme.spacing(1),
         height: 48,
-        paddingTop: 16,
     },
 }));

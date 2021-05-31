@@ -1,8 +1,8 @@
 import React from 'react';
 import {KeyboardDatePickerProps, DatePicker} from '@material-ui/pickers';
-import withStyles from "@material-ui/styles/withStyles";
 
 import PopupInput from "./PopupInput";
+import {dateDistance} from "../../../utils/date";
 
 // https://material-ui.com/components/pickers/
 
@@ -28,15 +28,14 @@ export function DateRangePicker(props: DateRangePickerProps) {
         props.onDateRange([dateFrom, selected]);
     };
 
+    let label = "Date range";
+    if (dateFrom && dateTo) label = dateDistance(dateFrom, dateTo) + " between";
+
     return <PopupInput
-        value={
-            `${dateFrom?.toLocaleDateString()} - ${dateTo?.toLocaleDateString()}`
-        }
+        value={`${dateFrom?.toLocaleDateString()} - ${dateTo?.toLocaleDateString()}`}
         id={props.id}
-        aria-label="Date range"
-        placeholder="Date Range"
-        hiddenLabel
-        required
+        label={label}
+        aria-label="Date Range"
         className={props.className}
     >
         <div style={{ display: 'flex', flexDirection: 'row', gap: 1, paddingBottom: 5 }}>
