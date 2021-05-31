@@ -96,6 +96,13 @@ declare interface CleaningRating {
 //</editor-fold>
 //<editor-fold desc="Records">
 
+declare interface Records {
+    alerts?: Alerts;
+    occupancies?: Occupancies;
+    indoorAirQualities?: IndoorAirQualities;
+    temperatures?: Temperatures;
+}
+
 declare enum AlertLevel { Low, Mid, High }
 
 declare interface AlertRecord {
@@ -106,7 +113,7 @@ declare interface AlertRecord {
     assignee?: User;
     timestamp?: Date;
 }
-declare interface AlertsResponse {
+declare interface Alerts {
     alerts: AlertRecord[];
 }
 
@@ -114,8 +121,7 @@ declare interface OccupancyRecord {
     hourlyPercentage?: number[];
     date?: Date;
 }
-
-declare interface OccupanciesResponse {
+declare interface Occupancies {
     dailyOccupancy: OccupancyRecord[];
 }
 
@@ -124,7 +130,7 @@ declare interface IndoorAirQualityRecord {
     average?: number;
     targetUnder?: number;
 }
-declare interface IndoorAirQualitiesResponse {
+declare interface IndoorAirQualities {
     radon?: IndoorAirQualityRecord;
     voc?: IndoorAirQualityRecord;
     co2?: IndoorAirQualityRecord;
@@ -137,7 +143,7 @@ declare interface TemperatureRecord {
     targetCelsius?: number;
     date?: Date;
 }
-declare interface TemperaturesResponse {
+declare interface Temperatures {
     dailyTemperatures: TemperatureRecord[];
 }
 
