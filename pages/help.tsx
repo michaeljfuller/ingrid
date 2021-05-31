@@ -1,5 +1,5 @@
 import React from "react";
-import UseLayout from "../decorators/pages/UseLayout";
+import UseLayout from "../utils/pages/decorators/UseLayout";
 import styles from "../styles/Page.module.css";
 import Head from "next/head";
 import Help from "../components/screens/Help";

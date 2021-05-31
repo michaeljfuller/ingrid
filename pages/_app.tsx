@@ -7,7 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 
 import '../styles/globals.css'
-import {WithLayout} from "../decorators/pages/UseLayout";
+import {WithLayout} from "../utils/pages/decorators/UseLayout";
 import MaterialUiTheme from "../components/pages/MaterialUiTheme";
 
 export type AppProps = NextAppProps & {

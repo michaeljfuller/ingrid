@@ -3,7 +3,7 @@ import {GetServerSideProps} from 'next'
 import Head from 'next/head'
 import {NextRouter} from "next/router";
 
-import UseLayout from "../decorators/pages/UseLayout";
+import UseLayout from "../utils/pages/decorators/UseLayout";
 import styles from '../styles/Page.module.css'
 import Dashboard from "../components/screens/Dashboard";
 import DashboardHeader, {DashboardHeaderProps} from "../components/pages/headers/DashboardHeader";
