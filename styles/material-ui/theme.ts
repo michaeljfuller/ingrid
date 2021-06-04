@@ -16,6 +16,11 @@ const theme = createMuiTheme({
         background: {
             default: '#fff',
         },
+        action: {
+            active: '#556cd6',
+            disabled: '#7f85a0',
+            focus: '#7787d4',
+        }
     },
 });
 

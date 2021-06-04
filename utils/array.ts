@@ -23,6 +23,22 @@ export function weave<Type = any>(array: Type[], callback: WeaveCallback): Type[
 export type WeaveCallback<Type = any> = (index: number) => Type;
 
 /** If the passed index is out-of-range, wrap back around to the start of the array. */
-export function getWrapped<Type=any>(index: number, array: Type[]): Type {
+export function getFromWrappedIndex<Type=any>(index: number, array: Type[]): Type {
     return array[index % array.length];
 }
+
+/**
+ * Loop through each item, returning the first defined value returned by the callback.
+ * @example forEachUntil([1,2,3], num => num % 2 ? undefined : num);
+ */
+export function forEachUntil<Result, Type=Result> (
+    array: Type[],
+    callback: ForEachUntilCallback<Type, Result>
+): Result|undefined {
+    for (let i = 0; i < array.length; i++) {
+        const result = callback(array[i], i, array);
+        if (result !== undefined) return result;
+    }
+    return undefined;
+}
+type ForEachUntilCallback<Type, Result> = (value: Type, index: number, array: Type[]) => Result|undefined;

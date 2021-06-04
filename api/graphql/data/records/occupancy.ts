@@ -1,5 +1,5 @@
 import {dateFromISO} from "../../../../utils/date";
-import {getWrapped, repeat} from "../../../../utils/array";
+import {getFromWrappedIndex, repeat} from "../../../../utils/array";
 
 export const occupancy: OccupancyRecord[] = [{
     date: "2020-10-20",
@@ -60,5 +60,5 @@ export const occupancy: OccupancyRecord[] = [{
 }].reverse();
 
 export const createOccupancies = (seed: number, count = 3, override?: Partial<Occupancies>) => Object.assign({
-    dailyOccupancy: repeat(count, () => getWrapped(seed++, occupancy))
+    dailyOccupancy: repeat(count, () => getFromWrappedIndex(seed++, occupancy))
 } as Occupancies, override);

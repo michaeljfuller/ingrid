@@ -1,5 +1,5 @@
 import {users} from "../users";
-import {getWrapped, repeat} from "../../../../utils/array";
+import {getFromWrappedIndex, repeat} from "../../../../utils/array";
 import {AlertLevel} from "../../../../utils/enums";
 
 export const alerts: AlertRecord[] = [{
@@ -26,5 +26,5 @@ export const alerts: AlertRecord[] = [{
 }];
 
 export const createAlerts = (seed: number, count = 3, override?: Partial<Alerts>) => Object.assign({
-    items: repeat(count, () => getWrapped(seed++, alerts))
+    items: repeat(count, () => getFromWrappedIndex(seed++, alerts))
 } as Alerts, override);

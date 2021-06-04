@@ -1,5 +1,5 @@
 import {dateFromISO} from "../../../../utils/date";
-import {getWrapped, repeat} from "../../../../utils/array";
+import {getFromWrappedIndex, repeat} from "../../../../utils/array";
 
 export const temperatures: TemperatureRecord[] = [{
     date: "2020-10-20",
@@ -31,5 +31,5 @@ export const temperatures: TemperatureRecord[] = [{
 }];
 
 export const createTemperatures = (seed: number, count = 3, override?: Partial<Temperatures>) => Object.assign({
-    dailyTemperatures: repeat(count, () => getWrapped(seed++, temperatures))
+    dailyTemperatures: repeat(count, () => getFromWrappedIndex(seed++, temperatures))
 } as Temperatures, override);
