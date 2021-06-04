@@ -1,7 +1,10 @@
 import css from "./Dashboard.module.css";
 import {repeat} from "../../utils/array";
 import StatsGroupWidget from "../widgets/StatsGroupWidget";
-import {AlertsWidget} from "../widgets/AlertsWidget";
+import AlertsWidget from "../widgets/AlertsWidget";
+import OccupancyWidget from "../widgets/OccupancyWidget";
+import IndoorAirQualityWidget from "../widgets/IndoorAirQualityWidget";
+import TemperatureWidget from "../widgets/TemperatureWidget";
 
 export interface DashboardProps {
     infrastructureSelection?: InfrastructureSelection;
@@ -29,7 +32,22 @@ export default function Dashboard({
                 light: stats?.light,
                 cleaning: stats?.cleaning,
             }} />
-            <AlertsWidget alerts={records?.alerts?.items || []} />
+            <AlertsWidget
+                alerts={records?.alerts?.items || []}
+            />
+            <OccupancyWidget
+                records={records?.occupancies?.dailyOccupancy || []}
+            />
+            <IndoorAirQualityWidget
+                radon={records?.indoorAirQualities?.radon}
+                voc={records?.indoorAirQualities?.voc}
+                co2={records?.indoorAirQualities?.co2}
+                pressure={records?.indoorAirQualities?.pressure}
+                humidity={records?.indoorAirQualities?.humidity}
+            />
+            <TemperatureWidget
+                records={records?.temperatures?.dailyTemperatures || []}
+            />
             {
                 repeat(8, index => (
                     <div key={index} className={css.widget}>

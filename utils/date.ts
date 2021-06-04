@@ -15,3 +15,6 @@ export const dateDistance = (from: Date, to: Date) => formatDistance(from, to);
 
 /** Subtract time from the date */
 export const subtractDate = sub;
+
+/** Name of the day */
+export const dayOfWeek = (date: Date, short = false) => format(date, short ? "EEE" : "EEEE");

@@ -1,31 +1,31 @@
 import {makeStyles} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardActionArea from '@material-ui/core/CardActionArea';
-
-import AlertIcon from '@material-ui/icons/ReportProblemOutlined';
+import GroupIcon from '@material-ui/icons/Group';
+import ToysIcon from '@material-ui/icons/Toys';
 
 import WidgetHeader from "./core/WidgetHeader";
-import {AlertItem} from "./AlertsWidget/AlertItem";
 
-export interface AlertsWidgetProps {
-    alerts: AlertRecord[];
+export interface IndoorAirQualityWidgetProps {
+    radon?: IndoorAirQualityRecord;
+    voc?: IndoorAirQualityRecord;
+    co2?: IndoorAirQualityRecord;
+    pressure?: IndoorAirQualityRecord;
+    humidity?: IndoorAirQualityRecord;
     className?: string;
 }
 
-export function AlertsWidget(props: AlertsWidgetProps) {
+export function IndoorAirQualityWidget(props: IndoorAirQualityWidgetProps) {
     const styles = useStyles();
 
     return <Card variant="outlined" className={styles.root+" "+props.className}>
-        <WidgetHeader title="Alerts" icon={<AlertIcon fontSize="large" />} />
+        <WidgetHeader title="Indoor Air Quality" icon={<ToysIcon fontSize="large" />} />
         <CardContent className={styles.CardContent}>
-            {props.alerts.map(alert => <AlertItem key={alert.id} alert={alert} />)}
-            {props.alerts?.length ? null : "No alerts"}
+
         </CardContent>
-        <CardActionArea>{/*props.alerts?.length*/}</CardActionArea>
     </Card>;
 }
-export default AlertsWidget;
+export default IndoorAirQualityWidget;
 
 const useStyles = makeStyles((theme) => {
     return {
